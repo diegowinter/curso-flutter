@@ -10,6 +10,11 @@ import 'package:flutter/material.dart';
 main() => runApp(new PerguntaApp());
 
 class PerguntaApp extends StatelessWidget {
+
+  void responder() {
+    print('Pergunta respondida!');
+  }
+
   @override
   Widget build(BuildContext context) {
     final List<String> perguntas = [
@@ -27,15 +32,15 @@ class PerguntaApp extends StatelessWidget {
             Text(perguntas[0]),
             ElevatedButton(
               child: Text('Resposta 1'),
-              onPressed: null,
+              onPressed: () => responder(),
             ),
             ElevatedButton(
               child: Text('Resposta 2'),
-              onPressed: null,
+              onPressed: () => responder(),
             ),
             ElevatedButton(
               child: Text('Resposta 3'),
-              onPressed: null,
+              onPressed: () => responder(),
             )
           ],
         ),
