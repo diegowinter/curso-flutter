@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:expenses/components/transaction_form.dart';
 import 'package:flutter/material.dart';
 
+import 'components/chart.dart';
 import 'components/transaction_list.dart';
 import 'models/transaction.dart';
 
@@ -46,25 +47,39 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   final List<Transaction> _transactions = [
-    // Transaction(
-    //   id: 't1',
-    //   title: 'Novo tênis de corrida',
-    //   value: 310.76,
-    //   date: DateTime.now()
-    // ),
-    // Transaction(
-    //   id: 't2',
-    //   title: 'Conta de luz',
-    //   value: 211.30,
-    //   date: DateTime.now()
-    // ),
-    // Transaction(
-    //   id: 't3',
-    //   title: 'Videogame novo',
-    //   value: 2799.99,
-    //   date: DateTime.now()
-    // )
+    Transaction(
+      id: 't0',
+      title: 'Conta antiga',
+      value: 400,
+      date: DateTime.now().subtract(Duration(days: 33))
+    ),
+    Transaction(
+      id: 't1',
+      title: 'Novo tênis de corrida',
+      value: 310.76,
+      date: DateTime.now().subtract(Duration(days: 3))
+    ),
+    Transaction(
+      id: 't2',
+      title: 'Conta de luz',
+      value: 211.30,
+      date: DateTime.now().subtract(Duration(days: 4))
+    ),
+    Transaction(
+      id: 't3',
+      title: 'Videogame novo',
+      value: 2799.99,
+      date: DateTime.now()
+    )
   ];
+
+  List<Transaction> get _recentTransactions {
+    return _transactions.where((tr) {
+      return tr.date.isAfter(DateTime.now().subtract(
+        Duration(days: 7)
+      ));
+    }).toList();
+  }
 
   _openTransactionFormModal(BuildContext context) {
     showModalBottomSheet(
@@ -104,16 +119,9 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Container(
-              child: Card(
-                color: Theme.of(context).primaryColor,
-                child: Text('Gráfico'),
-                elevation: 5,
-              ),
-            ),
+          children: [
+            Chart(_recentTransactions),
             TransactionList(_transactions),
           ],
         ),
