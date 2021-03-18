@@ -7,6 +7,8 @@ import 'components/chart.dart';
 import 'components/transaction_list.dart';
 import 'models/transaction.dart';
 
+import 'package:flutter_localizations/flutter_localizations.dart';
+
 main() => runApp(ExpensesApp());
 
 class ExpensesApp extends StatelessWidget {
@@ -35,6 +37,11 @@ class ExpensesApp extends StatelessWidget {
           )
         )
       ),
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate
+      ],
+      supportedLocales: [const Locale('pt', 'BR')]
     );
   }
 }
