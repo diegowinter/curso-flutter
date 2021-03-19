@@ -62,6 +62,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   final List<Transaction> _transactions = [];
+  bool _showChart = false;
 
   List<Transaction> get _recentTransactions {
     return _transactions.where((tr) {
@@ -103,6 +104,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    bool isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
+
     final appBar = AppBar(
       title: Text(
         'Despesas pessoais',
@@ -114,6 +117,15 @@ class _MyHomePageState extends State<MyHomePage> {
         // ),
       ),
       actions: [
+        if(isLandscape)
+          IconButton(
+            icon: Icon(_showChart ? Icons.list : Icons.bar_chart),
+            onPressed: () => {
+              setState(() {
+                _showChart = !_showChart;
+              })
+            }
+          ),
         IconButton(
           icon: Icon(Icons.add),
           onPressed: () => _openTransactionFormModal(context)
@@ -131,14 +143,33 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Container(
-              height: availableHeight * 0.3,
-              child: Chart(_recentTransactions)
-            ),
-            Container(
-              height: availableHeight * 0.7,
-              child: TransactionList(_transactions, _removeTransaction)
-            ),
+            // Switch para alternar entre gráfico ou lista no modo paisagem.
+            // Substituído pelo botão na AppBar.
+            // if(isLandscape)
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     Text('Exibir gráfico'),
+            //     Switch(
+            //       value: _showChart,
+            //       onChanged: (value) {
+            //         setState(() {
+            //           _showChart = value;
+            //         });
+            //       }
+            //     ),
+            //   ],
+            // ),
+            if (_showChart || !isLandscape)
+              Container(
+                  height: availableHeight * (isLandscape ? 1 : 0.3),
+                  child: Chart(_recentTransactions)
+                ),
+            if(!_showChart|| !isLandscape)
+              Container(
+                  height: availableHeight * (isLandscape ? 1 : 0.7),
+                  child: TransactionList(_transactions, _removeTransaction)
+                ),
           ],
         ),
       ),
