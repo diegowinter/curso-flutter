@@ -1,6 +1,8 @@
 import 'dart:math';
+import 'dart:io';
 
 import 'package:expenses/components/transaction_form.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
 import 'package:flutter/services.dart';
@@ -103,83 +105,109 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  Widget _getIconButton(IconData icon, Function fn) {
+    return Platform.isIOS 
+      ? GestureDetector(onTap: fn, child: Icon(icon))
+      : IconButton(icon: Icon(icon), onPressed: fn);
+  }
+
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     bool isLandscape = mediaQuery.orientation == Orientation.landscape;
 
-    final appBar = AppBar(
-      title: Text(
-        'Despesas pessoais',
-        // A propriedade abaixo leva em consideração a escala definida no SO
-        // para quando o usuário deseja ter fontes maiores, por questões de
-        // acessibilidade.
-        // style: TextStyle(
-        //   fontSize: 20 * mediaQuery.textScaleFactor
-        // ),
-      ),
-      actions: [
-        if(isLandscape)
-          IconButton(
-            icon: Icon(_showChart ? Icons.list : Icons.bar_chart),
-            onPressed: () => {
-              setState(() {
-                _showChart = !_showChart;
-              })
-            }
-          ),
-        IconButton(
-          icon: Icon(Icons.add),
-          onPressed: () => _openTransactionFormModal(context)
-        )
-      ],
-    );
+    final actions = [
+      if(isLandscape)
+        _getIconButton(
+          _showChart ? Icons.list : Icons.bar_chart,
+          () {
+            setState(() {
+              _showChart = !_showChart;
+            });
+          }
+        ),
+      _getIconButton(
+        Platform.isIOS ? CupertinoIcons.add : Icons.add,
+        () => _openTransactionFormModal(context)
+      )
+    ];
+
+    final PreferredSizeWidget appBar = Platform.isIOS 
+    ? CupertinoNavigationBar(
+        middle: Text('Despesas pessoais'),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: actions
+        ),
+      )
+    : AppBar(
+        title: Text(
+          'Despesas pessoais',
+          // A propriedade abaixo leva em consideração a escala definida no SO
+          // para quando o usuário deseja ter fontes maiores, por questões de
+          // acessibilidade.
+          // style: TextStyle(
+          //   fontSize: 20 * mediaQuery.textScaleFactor
+          // ),
+        ),
+        actions: actions,
+      );
 
     final availableHeight = mediaQuery.size.height 
       - appBar.preferredSize.height
       - mediaQuery.padding.top;
 
-    return Scaffold(
-      appBar: appBar,
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            // Switch para alternar entre gráfico ou lista no modo paisagem.
-            // Substituído pelo botão na AppBar.
-            // if(isLandscape)
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: [
-            //     Text('Exibir gráfico'),
-            //     Switch(
-            //       value: _showChart,
-            //       onChanged: (value) {
-            //         setState(() {
-            //           _showChart = value;
-            //         });
-            //       }
-            //     ),
-            //   ],
-            // ),
-            if (_showChart || !isLandscape)
-              Container(
-                  height: availableHeight * (isLandscape ? 1 : 0.3),
-                  child: Chart(_recentTransactions)
-                ),
-            if(!_showChart|| !isLandscape)
-              Container(
-                  height: availableHeight * (isLandscape ? 1 : 0.7),
-                  child: TransactionList(_transactions, _removeTransaction)
-                ),
-          ],
-        ),
+    final bodyPage = SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // Switch para alternar entre gráfico ou lista no modo paisagem.
+          // Substituído pelo botão na AppBar.
+          // if(isLandscape)
+          //   Row(
+          //     mainAxisAlignment: MainAxisAlignment.center,
+          //     children: [
+          //       Text('Exibir gráfico'),
+          //       Switch.adaptive(
+          //         activeColor: Theme.of(context).accentColor,
+          //         value: _showChart,
+          //         onChanged: (value) {
+          //           setState(() {
+          //             _showChart = value;
+          //           });
+          //         }
+          //       ),
+          //     ],
+          //   ),
+          if (_showChart || !isLandscape)
+            Container(
+                height: availableHeight * (isLandscape ? 1 : 0.3),
+                child: Chart(_recentTransactions)
+              ),
+          if(!_showChart|| !isLandscape)
+            Container(
+                height: availableHeight * (isLandscape ? 1 : 0.7),
+                child: TransactionList(_transactions, _removeTransaction)
+              ),
+        ],
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () => _openTransactionFormModal(context),
-      ),
-      //floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat
     );
+
+    return Platform.isIOS 
+      ? CupertinoPageScaffold(
+          navigationBar: appBar,
+          child: bodyPage
+        )
+      : Scaffold(
+        appBar: appBar,
+        body: bodyPage,
+        floatingActionButton: Platform.isIOS
+          ? Container()
+          : FloatingActionButton(
+              child: Icon(Icons.add),
+              onPressed: () => _openTransactionFormModal(context),
+            ),
+        //floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat
+      );
   }
 }
