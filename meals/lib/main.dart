@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         accentColor: Colors.blue,
         fontFamily: 'Raleway',
         canvasColor: Color.fromRGBO(255, 180, 133, 1),
-        textTheme: ThemeData.dark().textTheme.copyWith(
+        textTheme: ThemeData.light().textTheme.copyWith(
           // Tema para ser usado em títulos
           headline6: TextStyle(
             fontSize: 20,
