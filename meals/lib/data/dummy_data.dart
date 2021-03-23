@@ -5,12 +5,12 @@ import '../models/category.dart';
 const DUMMY_CATEGORIES = const [
   Category(
     id: 'c1',
-    title: 'Italiano',
+    title: 'Italianas',
     color: Colors.purple,
   ),
   Category(
     id: 'c2',
-    title: 'Rápido & Fácil',
+    title: 'Rápidas & Fáceis',
     color: Colors.red,
   ),
   Category(
@@ -20,17 +20,17 @@ const DUMMY_CATEGORIES = const [
   ),
   Category(
     id: 'c4',
-    title: 'Alemã',
+    title: 'Alemãs',
     color: Colors.amber,
   ),
   Category(
     id: 'c5',
-    title: 'Leve & Saudável',
+    title: 'Leves & Saudáveis',
     color: Colors.amber,
   ),
   Category(
     id: 'c6',
-    title: 'Exótica',
+    title: 'Exóticas',
     color: Colors.green,
   ),
   Category(
@@ -40,12 +40,12 @@ const DUMMY_CATEGORIES = const [
   ),
   Category(
     id: 'c8',
-    title: 'Asiática',
+    title: 'Asiáticas',
     color: Colors.lightGreen,
   ),
   Category(
     id: 'c9',
-    title: 'Francesa',
+    title: 'Francesas',
     color: Colors.pink,
   ),
   Category(
@@ -53,4 +53,14 @@ const DUMMY_CATEGORIES = const [
     title: 'Verão',
     color: Colors.teal,
   ),
+  Category(
+    id: 'c11',
+    title: 'Bebidas',
+    color: Colors.grey
+  ),
+  Category(
+    id: 'c12',
+    title: 'Tira-gosto',
+    color: Colors.white
+  )
 ];
