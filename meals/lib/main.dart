@@ -4,6 +4,7 @@ import 'screens/categories_screen.dart';
 import 'screens/categories_meals_screen.dart';
 import 'screens/meal_detail_screen.dart';
 import 'utils/app_routes.dart';
+import 'screens/tabs_screen.dart';
  
 void main() => runApp(MyApp());
  
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
       // home: CategoriesScreen(), // isso pode ser removido ao definir a rota /
       // initialRoute: '/', // pode colocar esta propriedade para definir
       routes: {
-        AppRoutes.HOME: (ctx) => CategoriesScreen(),
+        AppRoutes.HOME: (ctx) => TabsScreen(),
         AppRoutes.CATEGORIES_MEALS: (ctx) => CategoriesMealsScreen(),
         AppRoutes.MEAL_DETAIL: (ctx) => MealDetailScreen()
       },
