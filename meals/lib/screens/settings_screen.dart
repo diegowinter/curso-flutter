@@ -2,22 +2,35 @@ import 'package:flutter/material.dart';
 
 import '../components/main_drawer.dart';
 import '../models/settings.dart';
+import '../utils/app_routes.dart';
 
 class SettingsScreen extends StatefulWidget {
+  final Settings settings;
+  final Function(Settings) onSettingsChanged;
+  const SettingsScreen(this.settings, this.onSettingsChanged);
 
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  var settings = Settings();
+  var settings;
 
-  Widget _createSwitch(String title, String subtitle, bool value, Function onChange) {
+  @override
+  void initState() {
+    super.initState();
+    settings = widget.settings;
+  }
+
+  Widget _createSwitch(String title, String subtitle, bool value, Function(bool) onChange) {
     return SwitchListTile.adaptive(
       title: Text(title),
       subtitle: Text(subtitle),
       value: value,
-      onChanged: onChange,
+      onChanged: (value) {
+        onChange(value);
+        widget.onSettingsChanged(settings);
+      },
     );
   }
 
@@ -26,6 +39,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Configurações'),
+        leading: BackButton(
+          onPressed: () => Navigator.of(context).pushReplacementNamed(AppRoutes.HOME),
+        ),
       ),
       drawer: MainDrawer(),
       body: Column(
