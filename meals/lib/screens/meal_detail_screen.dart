@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import '../models/meal.dart';
 
 class MealDetailScreen extends StatelessWidget {
+  final Function(Meal) onToggleFavorite;
+  final bool Function(Meal) isFavorite;
+
+  const MealDetailScreen(this.onToggleFavorite, this.isFavorite);
 
   _createSectionTitle(BuildContext context, String title) {
     return Container(
@@ -90,10 +94,16 @@ class MealDetailScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.favorite),
-        onPressed: () {
-          Navigator.of(context).pop(meal.title);
-        },
+        child: Icon(
+          isFavorite(meal)
+            ? Icons.favorite
+            : Icons.favorite_border
+        ),
+        onPressed: () => onToggleFavorite(meal),
+        // onPressed: () {
+        //   Navigator.of(context).pop(meal.title);
+        // },     // passar parâmetro no pop faz com que esse parâmetro seja
+                  // devolvido no Future de quem navegou pra esta tela.
       ),
     );
   }
