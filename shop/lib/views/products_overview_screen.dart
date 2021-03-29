@@ -20,9 +20,7 @@ class ProductOverviewScreen extends StatefulWidget {
 
 class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
   bool _showFavoriteOnly = false;
-
-
-
+  
   @override
   Widget build(BuildContext context) {
     // items é o getter que tem no provider.
@@ -42,7 +40,7 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
               },
             ),
             builder: (ctx, cart, child) => Badge(
-              value: cart.itemsCount.toString(),
+              value: cart.totalItemsCount.toString(),
               child: child
             ),
           ),
