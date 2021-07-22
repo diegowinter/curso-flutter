@@ -55,7 +55,6 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
                 ),
                 maxLines: 3,
                 keyboardType: TextInputType.multiline,
-                textInputAction: TextInputAction.next,
                 focusNode: _descriptionFocusNode,
               )
             ],
