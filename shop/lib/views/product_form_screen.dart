@@ -1,8 +1,10 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../providers/product.dart';
+import '../providers/products.dart';
 
 class ProductFormScreen extends StatefulWidget {
   @override
@@ -24,14 +26,11 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
   }
 
   bool isValidImageUrl(String url) {
-    // bool startWithHttp = url.toLowerCase().startsWith('http://');
-    // bool startWithHttps = url.toLowerCase().startsWith('https://');
     bool isValidProtocol = url.toLowerCase().startsWith(RegExp('http(s)?:\/\/'));
-    print(isValidProtocol);
     bool endsWithPng = url.toLowerCase().endsWith('.png');
     bool endsWithJpg = url.toLowerCase().endsWith('.jpg');
     bool endsWithJpeg = url.toLowerCase().endsWith('.jpeg');
-    // return (startWithHttp || startWithHttps) && (endsWithPng || endsWithJpg || endsWithJpeg);
+
     return isValidProtocol && (endsWithPng || endsWithJpg || endsWithJpeg);
   }
 
@@ -63,6 +62,9 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
       description: _formData['description'],
       imageUrl: _formData['imageUrl']
     );
+
+    Provider.of<Products>(context, listen: false).addProduct(newProduct);
+    Navigator.of(context).pop();
   }
 
   @override
@@ -164,7 +166,6 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
                         validator: (value) {
                           bool isUrlEmpty = value.trim().isEmpty;
                           bool isUrlInvalid = !isValidImageUrl(value);
-                          print('ivalid?' + isUrlInvalid.toString());
                           if (isUrlEmpty || isUrlInvalid) {
                             return 'Informe uma URL válida.';
                           }
