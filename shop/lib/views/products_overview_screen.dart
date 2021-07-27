@@ -22,12 +22,17 @@ class ProductOverviewScreen extends StatefulWidget {
 
 class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
   bool _showFavoriteOnly = false;
+  bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
     // carregar os produtos
-    Provider.of<Products>(context, listen: false).loadProducts();
+    Provider.of<Products>(context, listen: false).loadProducts().then((_) {
+      setState(() {
+        _isLoading = false;
+      });
+    });
   }
 
   @override
@@ -75,7 +80,11 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
           )
         ],
       ),
-      body: ProductGrid(_showFavoriteOnly),
+      body: _isLoading 
+        ? Center(
+            child: CircularProgressIndicator(),
+          )
+        : ProductGrid(_showFavoriteOnly),
       drawer: AppDrawer(),
     );
   }

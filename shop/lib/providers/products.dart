@@ -3,14 +3,14 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:shop/data/dummy_data.dart';
+// import 'package:shop/data/dummy_data.dart';
 import 'product.dart';
 
 class Products with ChangeNotifier {
   Uri _url = Uri.parse('https://flutter-cod3r-fcee3-default-rtdb.firebaseio.com/products.json');
 
 
-  List<Product> _items = DUMMY_PRODUCTS;
+  List<Product> _items = [];
 
   // bool _showFavoriteOnly = false;
 
@@ -34,7 +34,19 @@ class Products with ChangeNotifier {
 
   Future<void> loadProducts() async {
     final response = await http.get(_url);
-    print(json.decode(response.body));
+    Map<String, dynamic> data = json.decode(response.body);
+    data.forEach((productId, productData) {
+      _items.add(Product(
+        id: productId,
+        title: productData['title'],
+        description: productData['description'],
+        price: productData['price'],
+        imageUrl: productData['imageUrl'],
+        isFavorite: productData['isFavorite']
+      ));
+    });
+    notifyListeners();
+    return Future.value();
   }
 
   Future<void> addProduct(Product newProduct) async {
