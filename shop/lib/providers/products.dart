@@ -30,9 +30,9 @@ class Products with ChangeNotifier {
   //   notifyListeners();
   // }
 
-  void addProduct(Product newProduct) {
+  Future<void> addProduct(Product newProduct) {
     Uri url = Uri.parse('https://flutter-cod3r-fcee3-default-rtdb.firebaseio.com/products.json');
-    http.post(
+    return http.post(
       url,
       body: json.encode({
         'title': newProduct.title,
