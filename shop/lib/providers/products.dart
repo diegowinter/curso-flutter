@@ -31,7 +31,7 @@ class Products with ChangeNotifier {
   // }
 
   Future<void> addProduct(Product newProduct) {
-    Uri url = Uri.parse('https://flutter-cod3r-fcee3-default-rtdb.firebaseio.com/products.json');
+    Uri url = Uri.parse('https://flutter-cod3r-fcee3-default-rtdb.firebaseio.com/products');
     return http.post(
       url,
       body: json.encode({
@@ -51,6 +51,8 @@ class Products with ChangeNotifier {
         imageUrl: newProduct.imageUrl
       ));
       notifyListeners();
+    }).catchError((error) {
+      throw error;
     });
   }
 
