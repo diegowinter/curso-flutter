@@ -7,6 +7,7 @@ import '../widgets/product_grid.dart';
 import '../widgets/badge.dart';
 
 import '../providers/cart.dart';
+import '../providers/products.dart';
 
 enum FilterOptions {
   Favorite,
@@ -21,6 +22,13 @@ class ProductOverviewScreen extends StatefulWidget {
 
 class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
   bool _showFavoriteOnly = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // carregar os produtos
+    Provider.of<Products>(context, listen: false).loadProducts();
+  }
 
   @override
   Widget build(BuildContext context) {

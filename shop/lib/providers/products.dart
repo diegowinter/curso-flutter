@@ -7,6 +7,8 @@ import 'package:shop/data/dummy_data.dart';
 import 'product.dart';
 
 class Products with ChangeNotifier {
+  Uri _url = Uri.parse('https://flutter-cod3r-fcee3-default-rtdb.firebaseio.com/products.json');
+
 
   List<Product> _items = DUMMY_PRODUCTS;
 
@@ -30,11 +32,14 @@ class Products with ChangeNotifier {
   //   notifyListeners();
   // }
 
-  Future<void> addProduct(Product newProduct) async {
-    Uri url = Uri.parse('https://flutter-cod3r-fcee3-default-rtdb.firebaseio.com/products.json');
+  Future<void> loadProducts() async {
+    final response = await http.get(_url);
+    print(json.decode(response.body));
+  }
 
+  Future<void> addProduct(Product newProduct) async {
     final response = await http.post(
-      url,
+      _url,
       body: json.encode({
         'title': newProduct.title,
         'description': newProduct.description,
