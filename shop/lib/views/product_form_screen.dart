@@ -90,32 +90,31 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
     });
 
     final products = Provider.of<Products>(context, listen: false);
-    if (_formData['id'] == null) {
-      try {
+    try {
+      if (_formData['id'] == null) {
         await products.addProduct(product);
-        Navigator.of(context).pop();
-      } catch (error) {
-        await showDialog<Null>(
-          context: context,
-          builder: (ctx) => AlertDialog(
-            title: Text('Ocorreu um erro!'),
-            content: Text('Ocorreu um erro ao salvar o produto.'),
-            actions: [
-              TextButton(
-                child: Text('Fechar'),
-                onPressed: () => Navigator.of(context).pop(),
-              )
-            ],
-          )
-        );
-      } finally {
-        setState(() {
-          _isLoading = true;
-        });
+      } else {
+        await products.updateProduct(product);
       }
-    } else {
-      products.updateProduct(product);
       Navigator.of(context).pop();
+    } catch (error) {
+      await showDialog<Null>(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text('Ocorreu um erro!'),
+          content: Text('Ocorreu um erro ao salvar o produto.'),
+          actions: [
+            TextButton(
+              child: Text('Fechar'),
+              onPressed: () => Navigator.of(context).pop(),
+            )
+          ],
+        )
+      );
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
