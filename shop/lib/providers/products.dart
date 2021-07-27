@@ -41,16 +41,17 @@ class Products with ChangeNotifier {
         'imageUrl': newProduct.imageUrl,
         'isFavorite': newProduct.isFavorite
       })
-    );
-
-    _items.add(Product(
-      id: Random().nextDouble().toString(),
-      title: newProduct.title,
-      description: newProduct.description,
-      price: newProduct.price,
-      imageUrl: newProduct.imageUrl
-    ));
-    notifyListeners();
+    ).then((response) {
+      print(json.decode(response.body));
+      _items.add(Product(
+        id: json.decode(response.body)['name'],
+        title: newProduct.title,
+        description: newProduct.description,
+        price: newProduct.price,
+        imageUrl: newProduct.imageUrl
+      ));
+      notifyListeners();
+    });
   }
 
   void updateProduct(Product product) {
