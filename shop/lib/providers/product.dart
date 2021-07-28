@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:shop/exceptions/http_exception.dart';
+import 'package:shop/utils/constants.dart';
 
 class Product with ChangeNotifier {
   final String id;
@@ -27,7 +28,7 @@ class Product with ChangeNotifier {
   }
 
   Future<void> toggleFavorite() async {
-    String _baseUrl = 'https://flutter-cod3r-fcee3-default-rtdb.firebaseio.com/products';
+    String _baseUrl = '${Constants.BASE_API_URL}/products';
 
     _toggleFavorite();
 
