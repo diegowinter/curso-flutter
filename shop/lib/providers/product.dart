@@ -27,14 +27,14 @@ class Product with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> toggleFavorite() async {
-    String _baseUrl = '${Constants.BASE_API_URL}/products';
+  Future<void> toggleFavorite(String token) async {
+    String _baseUrl = '${Constants.BASE_API_URL}/products/$id.json?auth=$token';
 
     _toggleFavorite();
 
     try {
       final response = await http.patch(
-        Uri.parse('$_baseUrl/$id.json'),
+        Uri.parse(_baseUrl),
         body: json.encode({
           'isFavorite': isFavorite
         })
