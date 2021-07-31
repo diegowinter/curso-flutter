@@ -14,12 +14,29 @@ class ProductDetailScreen extends StatelessWidget {
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
               title: Text(product.title),
-              background: Hero(
-                tag: product.id,
-                child: Image.network(
-                  product.imageUrl,
-                  fit: BoxFit.cover
-                ),
+              background: Stack(
+                fit: StackFit.expand,
+                children: [
+                  Hero(
+                    tag: product.id,
+                    child: Image.network(
+                      product.imageUrl,
+                      fit: BoxFit.cover
+                    ),
+                  ),
+                  DecoratedBox(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment(0, 0.8),
+                        end: Alignment(0, 0),
+                        colors: [
+                          Color.fromRGBO(0, 0, 0, 0.6),
+                          Color.fromRGBO(0, 0, 0, 0),
+                        ]
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -44,6 +61,7 @@ class ProductDetailScreen extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                 ),
+                SizedBox(height: 1000),
               ],
             ),
           )
