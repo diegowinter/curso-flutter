@@ -39,10 +39,6 @@ class _AuthCardState extends State<AuthCard> with SingleTickerProviderStateMixin
         curve: Curves.linear
       )
     );
-
-    _heightAnimation.addListener(() {
-      setState(() {});
-    });
   }
 
   @override
@@ -126,79 +122,83 @@ class _AuthCardState extends State<AuthCard> with SingleTickerProviderStateMixin
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0)
       ),
-      child: Container(
-        //height: _authMode == AuthMode.Login ? 290 : 372,
-        height: _heightAnimation.value.height,
-        width: deviceSize.width * 0.75,
-        padding: const EdgeInsets.all(16.0),
+      child: AnimatedBuilder(
+        animation: _heightAnimation,
         child: Form(
-          key: _form,
-          child: Column(
-            children: [
-              TextFormField(
-                decoration: InputDecoration(labelText: 'E-mail'),
-                keyboardType: TextInputType.emailAddress,
-                validator: (value) {
-                  if (value.isEmpty || !value.contains('@')) {
-                    return 'Informe um e-mail válido';
-                  }
-
-                  return null;
-                },
-                onSaved: (value) => _authData['email'] = value,
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Senha'),
-                controller: _passwordController,
-                obscureText: true,
-                validator: (value) {
-                  if (value.isEmpty || value.length < 5) {
-                    return 'Informe uma senha válida';
-                  }
-
-                  return null;
-                },
-                onSaved: (value) => _authData['password'] = value,
-              ),
-              if (_authMode == AuthMode.Signup)
+            key: _form,
+            child: Column(
+              children: [
                 TextFormField(
-                  decoration: InputDecoration(labelText: 'Confirmar senha'),
-                  obscureText: true,
-                  validator: _authMode == AuthMode.Signup ? (value) {
-                    if (value != _passwordController.text) {
-                      return 'As senhas são diferentes';
+                  decoration: InputDecoration(labelText: 'E-mail'),
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (value) {
+                    if (value.isEmpty || !value.contains('@')) {
+                      return 'Informe um e-mail válido';
                     }
 
                     return null;
-                  } : null,
+                  },
+                  onSaved: (value) => _authData['email'] = value,
                 ),
-              Spacer(),
-              if (_isLoading)
-                CircularProgressIndicator()
-              else
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30)
-                    ),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 30.0,
-                      vertical: 8.0
-                    )
-                  ),   
-                  child: Text(
-                    _authMode == AuthMode.Login ? 'ENTRAR' : 'REGISTRAR'
+                TextFormField(
+                  decoration: InputDecoration(labelText: 'Senha'),
+                  controller: _passwordController,
+                  obscureText: true,
+                  validator: (value) {
+                    if (value.isEmpty || value.length < 5) {
+                      return 'Informe uma senha válida';
+                    }
+
+                    return null;
+                  },
+                  onSaved: (value) => _authData['password'] = value,
+                ),
+                if (_authMode == AuthMode.Signup)
+                  TextFormField(
+                    decoration: InputDecoration(labelText: 'Confirmar senha'),
+                    obscureText: true,
+                    validator: _authMode == AuthMode.Signup ? (value) {
+                      if (value != _passwordController.text) {
+                        return 'As senhas são diferentes';
+                      }
+
+                      return null;
+                    } : null,
                   ),
-                  onPressed: _submit,
-                ),
-              TextButton(
-                onPressed: _switchAuthMode,
-                child: Text(
-                  'ALTERNAR PARA ${_authMode == AuthMode.Login ? 'REGISTRAR' : 'LOGIN'}'
-                ),
-              )
-            ],
+                Spacer(),
+                if (_isLoading)
+                  CircularProgressIndicator()
+                else
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30)
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 30.0,
+                        vertical: 8.0
+                      )
+                    ),   
+                    child: Text(
+                      _authMode == AuthMode.Login ? 'ENTRAR' : 'REGISTRAR'
+                    ),
+                    onPressed: _submit,
+                  ),
+                TextButton(
+                  onPressed: _switchAuthMode,
+                  child: Text(
+                    'ALTERNAR PARA ${_authMode == AuthMode.Login ? 'REGISTRAR' : 'LOGIN'}'
+                  ),
+                )
+              ],
+            ),
           ),
+        builder: (ctx, child) => Container(
+          //height: _authMode == AuthMode.Login ? 290 : 372,
+          height: _heightAnimation.value.height,
+          width: deviceSize.width * 0.75,
+          padding: const EdgeInsets.all(16.0),
+          child: child
         )
       )
     );
