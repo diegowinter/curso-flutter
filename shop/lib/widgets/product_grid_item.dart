@@ -26,12 +26,15 @@ class ProductGridItem extends StatelessWidget {
               arguments: product
             );
           },
-          child: FadeInImage(
-            placeholder: AssetImage('assets/images/product-placeholder.png'),
-            image: NetworkImage(
-              product.imageUrl,
+          child: Hero(
+            tag: product.id,
+            child: FadeInImage(
+              placeholder: AssetImage('assets/images/product-placeholder.png'),
+              image: NetworkImage(
+                product.imageUrl,
+              ),
+              fit: BoxFit.cover,
             ),
-            fit: BoxFit.cover,
           ),
         ),
         footer: GridTileBar(
