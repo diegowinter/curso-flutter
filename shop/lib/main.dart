@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/providers/orders.dart';
+import 'package:shop/utils/custom_route.dart';
 import 'package:shop/views/cart_screen.dart';
 import 'package:shop/views/orders_screen.dart';
 
@@ -50,6 +51,12 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.deepPurple,
           accentColor: Colors.deepOrange,
           fontFamily: 'Lato',
+          pageTransitionsTheme: PageTransitionsTheme(
+            builders: {
+              TargetPlatform.android: CustomPageTransitionsBuilder(),
+              TargetPlatform.iOS: CustomPageTransitionsBuilder()
+            }
+          )
         ),
         //home: ProductOverviewScreen(),
         routes: {
