@@ -25,19 +25,22 @@ class PlacesListScreen extends StatelessWidget {
             ? Center(child: CircularProgressIndicator())
             : Consumer<GreatPlaces>(
                 // child: Center(child: Text('Nenhum local cadastrado.'),),
-                builder: (ctx, greatPlaces, child) =>
-                    greatPlaces.itemsCount == 0
-                        ? Center(child: Text('Nenhum Local cadastrado'))
-                        : ListView.builder(
-                            itemCount: greatPlaces.itemsCount,
-                            itemBuilder: (ctx, i) => ListTile(
-                                  leading: CircleAvatar(
-                                    backgroundImage: FileImage(
-                                        greatPlaces.itemByIndex(i).image!),
-                                  ),
-                                  title: Text(greatPlaces.itemByIndex(i).title),
-                                  onTap: () {},
-                                )),
+                builder: (ctx, greatPlaces, child) => greatPlaces.itemsCount ==
+                        0
+                    ? Center(child: Text('Nenhum Local cadastrado'))
+                    : ListView.builder(
+                        itemCount: greatPlaces.itemsCount,
+                        itemBuilder: (ctx, i) => ListTile(
+                              leading: CircleAvatar(
+                                backgroundImage: FileImage(
+                                    greatPlaces.itemByIndex(i).image!),
+                              ),
+                              title: Text(greatPlaces.itemByIndex(i).title),
+                              subtitle: Text(
+                                greatPlaces.itemByIndex(i).location.address!,
+                              ),
+                              onTap: () {},
+                            )),
               ),
       ),
     );
