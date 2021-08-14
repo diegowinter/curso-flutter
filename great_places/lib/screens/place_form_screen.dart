@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:great_places/providers/great_places.dart';
+import 'package:great_places/widgets/location_input.dart';
 import 'package:provider/provider.dart';
 import '../widgets/image_input.dart';
 
@@ -13,7 +14,7 @@ class PlaceFormScreen extends StatefulWidget {
 class _PlaceFormScreenState extends State<PlaceFormScreen> {
   final _tileController = TextEditingController();
   late File? _pickedImage;
-  
+
   void _selectImage(File pickedImage) {
     _pickedImage = pickedImage;
   }
@@ -23,10 +24,8 @@ class _PlaceFormScreenState extends State<PlaceFormScreen> {
       return;
     }
 
-    Provider.of<GreatPlaces>(context, listen: false).addPlace(
-      _tileController.text,
-      _pickedImage
-    );
+    Provider.of<GreatPlaces>(context, listen: false)
+        .addPlace(_tileController.text, _pickedImage);
 
     Navigator.of(context).pop();
   }
@@ -34,9 +33,7 @@ class _PlaceFormScreenState extends State<PlaceFormScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Novo lugar')
-      ),
+      appBar: AppBar(title: Text('Novo lugar')),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -53,7 +50,9 @@ class _PlaceFormScreenState extends State<PlaceFormScreen> {
                       ),
                     ),
                     SizedBox(height: 10),
-                    ImageInput(this._selectImage)
+                    ImageInput(this._selectImage),
+                    SizedBox(height: 10),
+                    LocationInput(),
                   ],
                 ),
               ),
@@ -65,9 +64,9 @@ class _PlaceFormScreenState extends State<PlaceFormScreen> {
             label: Text('Adicionar'),
             style: ElevatedButton.styleFrom(
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              elevation: 0
+              elevation: 0,
             ),
-          )
+          ),
         ],
       ),
     );
