@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "785721028771",
+    "project_id": "chat-7b38e",
+    "storage_bucket": "chat-7b38e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:785721028771:android:a28d78db3573f801028f16",
+        "android_client_info": {
+          "package_name": "dev.diegowinter.chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "785721028771-otqfbb6pr8ll655970tq8kpicl9nei7o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDP5jrjuvIS0zdMQkMl5Cz8l9MbFDx10TQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "785721028771-otqfbb6pr8ll655970tq8kpicl9nei7o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
