@@ -2,6 +2,10 @@ import 'package:chat/models/auth_data.dart';
 import 'package:flutter/material.dart';
 
 class AuthForm extends StatefulWidget {
+  final void Function(AuthData authData) onSubmit;
+
+  AuthForm(this.onSubmit);
+
   @override
   _AuthFormState createState() => _AuthFormState();
 }
@@ -16,7 +20,7 @@ class _AuthFormState extends State<AuthForm>
     FocusScope.of(context).unfocus();
 
     if (isValid) {
-      print(_authData);
+      widget.onSubmit(_authData);
     }
   }
 
@@ -72,7 +76,7 @@ class _AuthFormState extends State<AuthForm>
                     onChanged: (value) => _authData.password = value,
                     validator: (value) {
                       if (value == null || value.trim().length < 8) {
-                        return 'Senha deve ter no mínimo 6 caracteres.';
+                        return 'Senha deve ter no mínimo 8 caracteres.';
                       }
                       return null;
                     },
