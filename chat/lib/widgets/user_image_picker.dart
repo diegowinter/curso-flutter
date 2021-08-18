@@ -19,6 +19,8 @@ class _UserImagePickerState extends State<UserImagePicker> {
     final picker = ImagePicker();
     final XFile? pickedImage = await picker.pickImage(
       source: ImageSource.camera,
+      imageQuality: 50,
+      maxWidth: 150,
     );
 
     setState(() {
