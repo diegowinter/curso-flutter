@@ -33,6 +33,21 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.9.1
+  flutter_native_splash: ^1.2.1
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "dev_assets/calc.png"
+  adaptive_icon_background: "#121212"
+  adaptive_icon_foreground: "dev_assets/calc-adaptive.png"
+  # command: flutter pub run flutter_launcher_icons:main
+
+flutter_native_splash:
+  image: "dev_assets/calc.png"
+  color: "#121212"
+  # command: flutter pub run flutter_native_splash:create
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
