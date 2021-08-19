@@ -10,7 +10,7 @@ class Keyboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.black,
+      color: Color.fromRGBO(48, 48, 48, 1),
       height: 500,
       child: Column(
         children: [
